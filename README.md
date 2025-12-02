@@ -21,6 +21,8 @@
 - [Setup](#setup)
 - [Configuration](#configuration)
 
+**📊 AI+ Users:** See [AI_DATA_REFERENCE.md](AI_DATA_REFERENCE.md) for complete list of all 100+ data points available from your controller!
+
 ---
 
 # Compatibility
