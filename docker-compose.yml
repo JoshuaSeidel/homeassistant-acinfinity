@@ -14,7 +14,7 @@ services:
     depends_on:
       - homeassistant-init
     environment:
-      - TZ=America/Chicago
+      - TZ=America/New_York
     volumes:
       - ha-config:/config
       - ./custom_components:/config/custom_components

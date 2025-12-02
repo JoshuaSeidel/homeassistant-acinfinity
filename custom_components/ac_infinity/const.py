@@ -107,6 +107,11 @@ class SensorType:
     CO2 = 11
     LIGHT = 12
     WATER = 20
+    WATER_TEMP_F = 30
+    WATER_TEMP_C = 31
+    PH = 40
+    EC = 50
+    TDS = 51
 
 
 class SensorReferenceKey:
@@ -122,6 +127,10 @@ class SensorReferenceKey:
     LIGHT_SENSOR = "lightSensor"
     WATER = "waterSensor"
     SOIL = "soilSensor"
+    WATER_TEMP = "waterTemperatureSensor"
+    PH_SENSOR = "phSensor"
+    EC_SENSOR = "ecSensor"
+    TDS_SENSOR = "tdsSensor"
 
 
 # noinspection SpellCheckingInspection

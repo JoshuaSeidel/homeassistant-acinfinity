@@ -221,22 +221,22 @@
         "name": "VPD"
       },
       "probe_temperature": {
-        "name": "Probe Temperature"
+        "name": "Tent Temperature"
       },
       "probe_humidity": {
-        "name": "Probe Humidity"
+        "name": "Tent Humidity"
       },
       "probe_vapor_pressure_deficit": {
-        "name": "Probe VPD"
+        "name": "Tent VPD"
       },
       "controller_temperature": {
-        "name": "Controller Temperature"
+        "name": "Built-in Temperature"
       },
       "controller_humidity": {
-        "name": "Controller Humidity"
+        "name": "Built-in Humidity"
       },
       "controller_vapor_pressure_deficit": {
-        "name": "Controller VPD"
+        "name": "Built-in VPD"
       },
       "co2_sensor": {
         "name": "CO2"
@@ -246,6 +246,18 @@
       },
       "soil_sensor": {
         "name": "Soil Moisture"
+      },
+      "water_temperature": {
+        "name": "Water Temperature"
+      },
+      "ph_sensor": {
+        "name": "pH"
+      },
+      "ec_sensor": {
+        "name": "EC"
+      },
+      "tds_sensor": {
+        "name": "TDS"
       },
       "current_power": {
         "name": "Current Power"

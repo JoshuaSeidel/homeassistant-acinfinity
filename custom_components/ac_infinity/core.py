@@ -174,10 +174,10 @@ class ACInfinitySensor:
                     identifiers={
                         (DOMAIN, f"{controller.controller_id}_{sensor_port}_spc24")
                     },
-                    name=f"{controller.controller_name} Probe Sensor",
+                    name=f"{controller.controller_name} Tent Probe",
                     manufacturer=MANUFACTURER,
                     via_device=controller.identifier,
-                    model="UIS Controller Sensor Probe (AC-SPC24)",
+                    model="UIS Tent Sensor Probe (AC-SPC24)",
                 )
             case SensorType.CO2 | SensorType.LIGHT:
                 return DeviceInfo(
@@ -208,6 +208,36 @@ class ACInfinitySensor:
                     manufacturer=MANUFACTURER,
                     via_device=controller.identifier,
                     model="UIS Soil Sensor (AC-SLS3)",
+                )
+            case SensorType.WATER_TEMP_F | SensorType.WATER_TEMP_C:
+                return DeviceInfo(
+                    identifiers={
+                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_wts")
+                    },
+                    name=f"{controller.controller_name} Water Temperature Sensor",
+                    manufacturer=MANUFACTURER,
+                    via_device=controller.identifier,
+                    model="UIS Water Temperature Sensor",
+                )
+            case SensorType.PH:
+                return DeviceInfo(
+                    identifiers={
+                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_phs")
+                    },
+                    name=f"{controller.controller_name} pH Sensor",
+                    manufacturer=MANUFACTURER,
+                    via_device=controller.identifier,
+                    model="UIS pH Sensor",
+                )
+            case SensorType.EC | SensorType.TDS:
+                return DeviceInfo(
+                    identifiers={
+                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_ecs")
+                    },
+                    name=f"{controller.controller_name} EC/TDS Sensor",
+                    manufacturer=MANUFACTURER,
+                    via_device=controller.identifier,
+                    model="UIS EC/TDS Sensor",
                 )
             case (
                 SensorType.CONTROLLER_TEMPERATURE_F

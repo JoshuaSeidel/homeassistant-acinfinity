@@ -1,14 +1,14 @@
 {
   "domain": "ac_infinity",
-  "name": "AC Infinity",
+  "name": "AC Infinity (AI+ Optimized)",
   "codeowners": [
-    "@dalinicus"
+    "@JoshuaSeidel"
   ],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/dalinicus/homeassistant-acinfinity",
+  "documentation": "https://github.com/JoshuaSeidel/homeassistant-acinfinity",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/dalinicus/homeassistant-acinfinity",
+  "issue_tracker": "https://github.com/JoshuaSeidel/homeassistant-acinfinity/issues",
   "requirements": [],
-  "version": "2.1.1"
+  "version": "1.0.0"
 }
