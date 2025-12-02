@@ -166,15 +166,57 @@ Access any value in automations:
 {{ states('sensor.grow_tent_exhaust_fan_current_power') }}
 ```
 
+## Understanding AI-Managed Devices
+
+### What is AI Assist?
+
+In the AC Infinity mobile app, you can enable "AI Assist" which uses artificial intelligence to automatically manage your grow environment. When AI Assist is active:
+
+**What Changes:**
+- ❌ You cannot manually control individual device settings in the app
+- ✅ The AI takes over and makes decisions based on your grow stage, goals, and conditions
+- ✅ AI creates dynamic schedules and adjusts devices automatically
+- ✅ You can view AI's decisions and schedules in the "AI" section of the app
+
+**In Home Assistant:**
+- ✅ All sensor data is still available (temperatures, humidity, VPD, etc.)
+- ✅ You can see current device states (on/off, power levels)
+- ✅ You can see when devices will change state (remaining time, next state change)
+- ⚠️ Changing settings in Home Assistant may conflict with AI management
+- ℹ️ The AI's decision-making logic happens server-side (not exposed via API)
+
+**Where to See AI Decisions:**
+- Open AC Infinity mobile app
+- Go to "AI" tab
+- View AI's current schedule, decisions, and reasoning
+- See why devices are on/off at specific times
+
+### Recommendation
+
+If using AI Assist:
+1. Keep "Sensors Only" mode in this integration
+2. Monitor conditions via Home Assistant
+3. Let the AI handle device control
+4. View AI schedules in the mobile app
+5. Use Home Assistant for alerts and monitoring automations
+
+If NOT using AI Assist:
+1. Enable "All" entities in this integration
+2. Full manual control via Home Assistant
+3. Create your own automations
+4. Set your own schedules and triggers
+
 ## What's NOT Available
 
-The following are hardware limitations, not integration limitations:
+The following are hardware/API limitations, not integration limitations:
 
-1. **Internal controller calculations** - The API doesn't expose how VPD is calculated
-2. **Historical data** - AC Infinity doesn't provide history, use Home Assistant's history
-3. **Direct sensor calibration** - Must be done via AC Infinity app
-4. **Firmware updates** - Must be done via AC Infinity app
-5. **WiFi settings** - Must be configured via AC Infinity app
+1. **AI Assist Logic** - The AI's decision-making happens in AC Infinity's cloud, not exposed via API
+2. **AI Schedules** - AI-created schedules must be viewed in the mobile app's AI section
+3. **Internal controller calculations** - The API doesn't expose how VPD is calculated
+4. **Historical data** - AC Infinity doesn't provide history, use Home Assistant's history
+5. **Direct sensor calibration** - Must be done via AC Infinity app
+6. **Firmware updates** - Must be done via AC Infinity app
+7. **WiFi settings** - Must be configured via AC Infinity app
 
 ## Raw Data Access
 

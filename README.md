@@ -226,6 +226,12 @@ Go to **Settings → Devices & Services → AC Infinity → Configure**
 - Disable unused ports to reduce entity count
 - New controllers auto-add with "Sensors Only"
 
+**⚠️ Using AI Assist in AC Infinity App?**
+- If you use AI Assist, keep "Sensors Only" mode
+- The AI manages devices automatically from the cloud
+- You can monitor but shouldn't manually control devices
+- View AI schedules and decisions in the mobile app's "AI" section
+
 **Cleanup:**
 Disabled entities remain in Home Assistant until manually deleted at:
 `Settings → Devices & Services → Entities`

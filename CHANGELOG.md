@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.0.1] - 2025-12-02
+
+### Documentation Updates
+
+**AI Management Clarification**
+- Added documentation explaining AI-managed device behavior
+- Clarified that when using AI Assist in the AC Infinity app, the AI controls devices automatically
+- Updated AI_DATA_REFERENCE.md with AI management section
+- Added note about where to view AI schedules and decisions in the app
+
+**Release Process**
+- Simplified HACS configuration (removed zip_release requirement)
+- Streamlined release workflow
+
+### Notes
+
+When you enable "AI Assist" in the AC Infinity mobile app, the AI takes over device control based on your grow stage and goals. Individual device settings become read-only in the app, and control happens through the AI system. This integration exposes all sensor data and the current state of devices, but the AI's decision-making happens server-side in the AC Infinity cloud.
+
+---
+
 ## [1.0.0] - 2025-12-02
 
 ### AI+ Optimized Fork Release
