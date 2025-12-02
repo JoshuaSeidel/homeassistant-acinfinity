@@ -65,12 +65,23 @@ Your AI+ controller gives you the complete AC Infinity experience:
 ### 🔌 8 Controllable Device Ports
 
 Each port (for fans, lights, humidifiers, etc.) provides:
+
+**Status & Control:**
 - Current power level (0-10)
 - Online status
 - On/Off state
 - Remaining time in current cycle
 - Next state change timestamp
 - Full automation controls (modes, schedules, triggers)
+
+**Comprehensive Automation Data (20+ sensors per port):**
+- Target values (temperature, humidity, VPD)
+- Trigger thresholds (high/low for temp, humidity, VPD)
+- Timer & cycle durations
+- Schedule times
+- Current automation readings
+- Trend indicators (rising/falling)
+- Speed settings (on/off)
 
 ### 🔬 4 Additional USB Sensor Ports
 

@@ -43,6 +43,7 @@ from .const import (
     ControllerPropertyKey,
     CustomDevicePropertyKey,
     DevicePropertyKey,
+    DeviceControlKey,
     SensorPropertyKey,
     SensorReferenceKey,
     SensorType, ControllerType,
@@ -467,7 +468,34 @@ SENSOR_DESCRIPTIONS: dict[int, ACInfinitySensorSensorEntityDescription] = {
     ),
 }
 
+def __suitable_fn_device_control_default(entity: ACInfinityEntity, device: ACInfinityDevice):
+    return entity.ac_infinity.get_device_control_exists(
+        device.controller.controller_id, device.device_port, entity.data_key
+    )
+
+
+def __get_value_fn_device_control_default(
+    entity: ACInfinityEntity, device: ACInfinityDevice
+):
+    return entity.ac_infinity.get_device_control(
+        device.controller.controller_id, device.device_port, entity.data_key, 0
+    )
+
+
+def __get_value_fn_device_control_floating_point(
+    entity: ACInfinityEntity, device: ACInfinityDevice
+):
+    # value stored as an integer, but represents a 2 digit precision float
+    return (
+        entity.ac_infinity.get_device_control(
+            device.controller.controller_id, device.device_port, entity.data_key, 0
+        )
+        / 100
+    )
+
+
 DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
+    # Current Status Sensors
     ACInfinityDeviceSensorEntityDescription(
         key=DevicePropertyKey.SPEAK,
         device_class=SensorDeviceClass.POWER_FACTOR,
@@ -503,6 +531,278 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
         enabled_fn=enabled_fn_sensor,
         suitable_fn=lambda x, y: True,
         get_value_fn=__get_next_mode_change_timestamp,
+    ),
+    # Temperature Automation Sensors
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.TARGET_TEMP,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        suggested_unit_of_measurement=None,
+        icon="mdi:target",
+        translation_key="target_temperature",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.AUTO_TEMP_HIGH_TRIGGER,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        suggested_unit_of_measurement=None,
+        icon="mdi:thermometer-chevron-up",
+        translation_key="temperature_high_trigger",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.AUTO_TEMP_LOW_TRIGGER,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        suggested_unit_of_measurement=None,
+        icon="mdi:thermometer-chevron-down",
+        translation_key="temperature_low_trigger",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    # Humidity Automation Sensors
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.TARGET_HUMI,
+        device_class=SensorDeviceClass.HUMIDITY,
+        state_class=None,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_unit_of_measurement=None,
+        icon="mdi:target",
+        translation_key="target_humidity",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.AUTO_HUMIDITY_HIGH_TRIGGER,
+        device_class=SensorDeviceClass.HUMIDITY,
+        state_class=None,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_unit_of_measurement=None,
+        icon="mdi:water-percent",
+        translation_key="humidity_high_trigger",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.AUTO_HUMIDITY_LOW_TRIGGER,
+        device_class=SensorDeviceClass.HUMIDITY,
+        state_class=None,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_unit_of_measurement=None,
+        icon="mdi:water-percent-alert",
+        translation_key="humidity_low_trigger",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    # VPD Automation Sensors
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.TARGET_VPD,
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class=None,
+        native_unit_of_measurement=UnitOfPressure.KPA,
+        suggested_unit_of_measurement=None,
+        icon="mdi:target",
+        translation_key="target_vpd",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.VPD_HIGH_TRIGGER,
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class=None,
+        native_unit_of_measurement=UnitOfPressure.KPA,
+        suggested_unit_of_measurement=None,
+        icon="mdi:water-thermometer-outline",
+        translation_key="vpd_high_trigger",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.VPD_LOW_TRIGGER,
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class=None,
+        native_unit_of_measurement=UnitOfPressure.KPA,
+        suggested_unit_of_measurement=None,
+        icon="mdi:water-thermometer",
+        translation_key="vpd_low_trigger",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    # Timer and Cycle Mode Sensors
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.TIMER_DURATION_TO_ON,
+        device_class=SensorDeviceClass.DURATION,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_unit_of_measurement=None,
+        icon="mdi:timer",
+        translation_key="timer_to_on_minutes",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.TIMER_DURATION_TO_OFF,
+        device_class=SensorDeviceClass.DURATION,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_unit_of_measurement=None,
+        icon="mdi:timer-off",
+        translation_key="timer_to_off_minutes",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.CYCLE_DURATION_ON,
+        device_class=SensorDeviceClass.DURATION,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_unit_of_measurement=None,
+        icon="mdi:cached",
+        translation_key="cycle_on_minutes",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.CYCLE_DURATION_OFF,
+        device_class=SensorDeviceClass.DURATION,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_unit_of_measurement=None,
+        icon="mdi:cached",
+        translation_key="cycle_off_minutes",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    # Scheduled Times (minutes since midnight)
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.SCHEDULED_START_TIME,
+        device_class=None,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_unit_of_measurement=None,
+        icon="mdi:clock-start",
+        translation_key="schedule_start_time",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.SCHEDULED_END_TIME,
+        device_class=None,
+        state_class=None,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_unit_of_measurement=None,
+        icon="mdi:clock-end",
+        translation_key="schedule_end_time",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    # Current Readings (what automation sees)
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.TEMPERATURE,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        suggested_unit_of_measurement=None,
+        icon=None,
+        translation_key="automation_temperature",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.HUMIDITY,
+        device_class=SensorDeviceClass.HUMIDITY,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_unit_of_measurement=None,
+        icon=None,
+        translation_key="automation_humidity",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.VPD_NUMS,
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=UnitOfPressure.KPA,
+        suggested_unit_of_measurement=None,
+        icon="mdi:water-thermometer",
+        translation_key="automation_vpd",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_floating_point,
+    ),
+    # Trend Indicators
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.T_TREND,
+        device_class=None,
+        state_class=None,
+        native_unit_of_measurement=None,
+        suggested_unit_of_measurement=None,
+        icon="mdi:trending-up",
+        translation_key="temperature_trend",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.H_TREND,
+        device_class=None,
+        state_class=None,
+        native_unit_of_measurement=None,
+        suggested_unit_of_measurement=None,
+        icon="mdi:trending-up",
+        translation_key="humidity_trend",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    # On/Off Speed Settings
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.ON_SPEED,
+        device_class=SensorDeviceClass.POWER_FACTOR,
+        state_class=None,
+        native_unit_of_measurement=None,
+        suggested_unit_of_measurement=None,
+        icon="mdi:fan",
+        translation_key="on_speed",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
+    ),
+    ACInfinityDeviceSensorEntityDescription(
+        key=DeviceControlKey.OFF_SPEED,
+        device_class=SensorDeviceClass.POWER_FACTOR,
+        state_class=None,
+        native_unit_of_measurement=None,
+        suggested_unit_of_measurement=None,
+        icon="mdi:fan-off",
+        translation_key="off_speed",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=__suitable_fn_device_control_default,
+        get_value_fn=__get_value_fn_device_control_default,
     ),
 ]
 

@@ -267,6 +267,72 @@
       },
       "next_state_change": {
         "name": "Next State Change"
+      },
+      "target_temperature": {
+        "name": "Target Temperature"
+      },
+      "temperature_high_trigger": {
+        "name": "Temperature High Trigger"
+      },
+      "temperature_low_trigger": {
+        "name": "Temperature Low Trigger"
+      },
+      "target_humidity": {
+        "name": "Target Humidity"
+      },
+      "humidity_high_trigger": {
+        "name": "Humidity High Trigger"
+      },
+      "humidity_low_trigger": {
+        "name": "Humidity Low Trigger"
+      },
+      "target_vpd": {
+        "name": "Target VPD"
+      },
+      "vpd_high_trigger": {
+        "name": "VPD High Trigger"
+      },
+      "vpd_low_trigger": {
+        "name": "VPD Low Trigger"
+      },
+      "timer_to_on_minutes": {
+        "name": "Timer to On (Minutes)"
+      },
+      "timer_to_off_minutes": {
+        "name": "Timer to Off (Minutes)"
+      },
+      "cycle_on_minutes": {
+        "name": "Cycle On (Minutes)"
+      },
+      "cycle_off_minutes": {
+        "name": "Cycle Off (Minutes)"
+      },
+      "schedule_start_time": {
+        "name": "Schedule Start Time"
+      },
+      "schedule_end_time": {
+        "name": "Schedule End Time"
+      },
+      "automation_temperature": {
+        "name": "Automation Temperature"
+      },
+      "automation_humidity": {
+        "name": "Automation Humidity"
+      },
+      "automation_vpd": {
+        "name": "Automation VPD"
+      },
+      "temperature_trend": {
+        "name": "Temperature Trend"
+      },
+      "humidity_trend": {
+        "name": "Humidity Trend"
+      },
+      "on_speed": {
+        "name": "On Speed"
+      },
+      "off_speed": {
+        "name": "Off Speed"
       }
     },
     "switch": {
