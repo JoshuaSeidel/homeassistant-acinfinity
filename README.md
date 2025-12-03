@@ -67,6 +67,9 @@ Your AI+ controller gives you the complete AC Infinity experience:
 Each port (for fans, lights, humidifiers, etc.) provides:
 
 **Status & Control:**
+- Port status (Active/Inactive)
+- Connected device type (Grow Light, Fan, Humidifier, etc.)
+- Device identification (Load Type ID, Sub-Device ID)
 - Current power level (0-10)
 - Online status
 - On/Off state

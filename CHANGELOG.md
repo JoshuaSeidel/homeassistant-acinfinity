@@ -4,6 +4,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2024-12-03
+
+### Added
+- **Port Usage Detection**: New sensors to identify active vs inactive ports
+  - `Port Status` - Shows if port is Active or Inactive
+  - `Connected Device Type` - Human-readable device type (e.g., "Grow Light", "Humidifier", "Ventilation Fan")
+  - `Device Load Type ID` - Numeric device type identifier for advanced users
+  - `Sub-Device ID` - Unique identifier for connected devices
+- 15+ device types now identified including:
+  - Grow Lights, Humidifiers, Dehumidifiers, Heaters, AC units
+  - Circulation Fans, Ventilation Fans, Water Pumps, Peristaltic Pumps
+  - CO2 Regulators, Generic Outlets
+
+### Changed
+- Port sensors now include connection and device identification data
+- Device type names properly mapped for both standard and AI+ controllers
+
 ## [1.1.0] - 2024-12-02
 
 ### Added
