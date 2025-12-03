@@ -552,7 +552,7 @@ def __get_value_fn_device_sub_device_id(
 DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
     # Port Status Sensors
     ACInfinityDeviceSensorEntityDescription(
-        key="port_status",
+        key=CustomDevicePropertyKey.PORT_STATUS,
         device_class=SensorDeviceClass.ENUM,
         state_class=None,
         native_unit_of_measurement=None,
@@ -564,7 +564,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
         get_value_fn=__get_value_fn_port_is_active,
     ),
     ACInfinityDeviceSensorEntityDescription(
-        key="connected_device_type",
+        key=CustomDevicePropertyKey.CONNECTED_DEVICE_TYPE,
         device_class=SensorDeviceClass.ENUM,
         state_class=None,
         native_unit_of_measurement=None,
@@ -572,7 +572,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
         icon="mdi:devices",
         translation_key="connected_device_type",
         enabled_fn=enabled_fn_sensor,
-        suitable_fn=__suitable_fn_device_control_default,
+        suitable_fn=lambda x, y: True,
         get_value_fn=__get_value_fn_device_type_name,
     ),
     ACInfinityDeviceSensorEntityDescription(
@@ -584,11 +584,11 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
         icon="mdi:identifier",
         translation_key="device_load_type_id",
         enabled_fn=enabled_fn_sensor,
-        suitable_fn=__suitable_fn_device_control_default,
+        suitable_fn=lambda x, y: True,
         get_value_fn=__get_value_fn_device_control_default,
     ),
     ACInfinityDeviceSensorEntityDescription(
-        key="subDeviceId",
+        key=CustomDevicePropertyKey.SUB_DEVICE_ID,
         device_class=None,
         state_class=None,
         native_unit_of_measurement=None,
@@ -596,7 +596,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
         icon="mdi:barcode",
         translation_key="sub_device_id",
         enabled_fn=enabled_fn_sensor,
-        suitable_fn=__suitable_fn_device_control_default,
+        suitable_fn=lambda x, y: True,
         get_value_fn=__get_value_fn_device_sub_device_id,
     ),
     # Current Status Sensors

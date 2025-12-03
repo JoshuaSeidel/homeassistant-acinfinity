@@ -4,6 +4,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2024-12-03
+
+### Fixed
+- Fixed new port status sensors not appearing due to incorrect key registration
+- Changed suitable_fn for port detection sensors to always return true
+- Properly registered custom sensor keys in CustomDevicePropertyKey
+
 ## [1.2.0] - 2024-12-03
 
 ### Added

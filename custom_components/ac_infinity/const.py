@@ -36,6 +36,9 @@ class EntityConfigValue:
 class CustomDevicePropertyKey:
     # Derived sensors
     NEXT_STATE_CHANGE = "nextStateChange"
+    PORT_STATUS = "portStatus"
+    CONNECTED_DEVICE_TYPE = "connectedDeviceType"
+    SUB_DEVICE_ID = "subDeviceId"
 
 
 class AtType:
