@@ -334,6 +334,9 @@
       "off_speed": {
         "name": "Off Speed"
       },
+      "port_number": {
+        "name": "Port Number"
+      },
       "port_status": {
         "name": "Port Status"
       },

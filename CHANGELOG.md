@@ -4,6 +4,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2024-12-03
+
+### Added
+- **Port Number Sensor**: Each device now displays which port it's connected to (1-8)
+- Makes it easy to identify device location on the controller
+
 ## [1.2.1] - 2024-12-03
 
 ### Fixed

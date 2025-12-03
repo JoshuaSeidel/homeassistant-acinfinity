@@ -549,8 +549,26 @@ def __get_value_fn_device_sub_device_id(
     return sub_device_id if sub_device_id else "None"
 
 
+def __get_value_fn_port_number(
+    entity: ACInfinityEntity, device: ACInfinityDevice
+):
+    return device.device_port
+
+
 DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
     # Port Status Sensors
+    ACInfinityDeviceSensorEntityDescription(
+        key=CustomDevicePropertyKey.PORT_NUMBER,
+        device_class=None,
+        state_class=None,
+        native_unit_of_measurement=None,
+        suggested_unit_of_measurement=None,
+        icon="mdi:numeric",
+        translation_key="port_number",
+        enabled_fn=enabled_fn_sensor,
+        suitable_fn=lambda x, y: True,
+        get_value_fn=__get_value_fn_port_number,
+    ),
     ACInfinityDeviceSensorEntityDescription(
         key=CustomDevicePropertyKey.PORT_STATUS,
         device_class=SensorDeviceClass.ENUM,

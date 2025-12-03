@@ -39,6 +39,7 @@ class CustomDevicePropertyKey:
     PORT_STATUS = "portStatus"
     CONNECTED_DEVICE_TYPE = "connectedDeviceType"
     SUB_DEVICE_ID = "subDeviceId"
+    PORT_NUMBER = "portNumber"
 
 
 class AtType:
