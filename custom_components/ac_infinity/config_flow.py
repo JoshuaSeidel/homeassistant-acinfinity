@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any
 
 import voluptuous as vol
@@ -13,7 +13,6 @@ from homeassistant.core import callback
 from homeassistant.helpers.selector import selector
 from voluptuous import Required
 
-from custom_components.ac_infinity import ACInfinityDataUpdateCoordinator
 from custom_components.ac_infinity.client import (
     ACInfinityClient,
     ACInfinityClientCannotConnect,
@@ -299,15 +298,9 @@ class OptionsFlow(ACInfinityFlowBase, config_entries.OptionsFlow):
 
                 self.__update_config_entry_data(new_data)
 
-                coordinator: ACInfinityDataUpdateCoordinator = self.hass.data[DOMAIN][
-                    self.config_entry.entry_id
-                ]
-                coordinator.update_interval = timedelta(seconds=polling_interval)
-
                 _LOGGER.info("Polling Interval changed to %s seconds", polling_interval)
 
-                if password:
-                    return await self.async_step_notify_restart()
+                # Integration will auto-reload via update listener
                 return self.async_create_entry(title="", data={})
 
         return self.async_show_form(
@@ -366,7 +359,8 @@ class OptionsFlow(ACInfinityFlowBase, config_entries.OptionsFlow):
             new_data[ConfigurationKey.ENTITIES][str(self.current_device_id)] = user_input
             self.__update_config_entry_data(new_data)
 
-            return await self.async_step_notify_restart()
+            # Integration will auto-reload via update listener
+            return self.async_create_entry(title="", data={})
 
         ac_infinity: ACInfinityService = self.hass.data[DOMAIN][
             self.config_entry.entry_id
@@ -384,18 +378,6 @@ class OptionsFlow(ACInfinityFlowBase, config_entries.OptionsFlow):
             errors=errors,
             description_placeholders=description_placeholders
         )
-
-    async def async_step_notify_restart(self):
-        return self.async_show_menu(
-            step_id="notify_restart", menu_options=["restart_yes", "restart_no"]
-        )
-
-    async def async_step_restart_yes(self, _):
-        await self.hass.services.async_call("homeassistant", "restart")
-        return self.async_create_entry(title="", data={})
-
-    async def async_step_restart_no(self, _):
-        return self.async_create_entry(title="", data={})
 
     def __update_config_entry_data(self, new_data: dict[str, Any]) -> None:
         """Update config entry data with modified timestamp."""

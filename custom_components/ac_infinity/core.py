@@ -1180,16 +1180,40 @@ class ACInfinityEntities(list[ACInfinityEntity]):
             )
 
 
+def _get_entity_config_setting(entry: ConfigEntry, device_id: str, entity_config_key: str) -> str | None:
+    """Safely get the entity config setting, returning None if not found."""
+    try:
+        entities_config = entry.data.get(ConfigurationKey.ENTITIES, {})
+        device_config = entities_config.get(device_id, {})
+        return device_config.get(entity_config_key)
+    except (KeyError, TypeError):
+        _LOGGER.warning(
+            "Entity config not found for device_id=%s, key=%s. Defaulting to disabled.",
+            device_id, entity_config_key
+        )
+        return None
+
+
 def enabled_fn_sensor(entry: ConfigEntry, device_id: str, entity_config_key: str) -> bool:
-    return entry.data[ConfigurationKey.ENTITIES][device_id][entity_config_key] != EntityConfigValue.Disable
+    """Check if sensor entities are enabled for the given device/port."""
+    setting = _get_entity_config_setting(entry, device_id, entity_config_key)
+    if setting is None:
+        return False  # Default to disabled if config is missing
+    return setting != EntityConfigValue.Disable
 
 
 def enabled_fn_control(entry: ConfigEntry, device_id: str, entity_config_key: str) -> bool:
-    setting = entry.data[ConfigurationKey.ENTITIES][device_id][entity_config_key]
+    """Check if control entities are enabled for the given device/port."""
+    setting = _get_entity_config_setting(entry, device_id, entity_config_key)
+    if setting is None:
+        return False  # Default to disabled if config is missing
     return setting == EntityConfigValue.All or setting == EntityConfigValue.SensorsAndControls
 
 
 def enabled_fn_setting(entry: ConfigEntry, device_id: str, entity_config_key: str) -> bool:
-    setting = entry.data[ConfigurationKey.ENTITIES][device_id][entity_config_key]
+    """Check if setting entities are enabled for the given device/port."""
+    setting = _get_entity_config_setting(entry, device_id, entity_config_key)
+    if setting is None:
+        return False  # Default to disabled if config is missing
     return setting == EntityConfigValue.All or setting == EntityConfigValue.SensorsAndSettings
 
