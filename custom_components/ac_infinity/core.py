@@ -155,108 +155,6 @@ class ACInfinitySensor:
         self._sensor_port = sensor_json[SensorPropertyKey.ACCESS_PORT]
         self._sensor_type = sensor_json[SensorPropertyKey.SENSOR_TYPE]
 
-        self._device_info = self.__get_device_info(
-            self._controller, self._sensor_port, self._sensor_type
-        )
-
-    @staticmethod
-    def __get_device_info(
-        controller: ACInfinityController, sensor_port: int, sensor_type: int
-    ):
-        match int(sensor_type):
-            case (
-                SensorType.PROBE_TEMPERATURE_F
-                | SensorType.PROBE_TEMPERATURE_C
-                | SensorType.PROBE_HUMIDITY
-                | SensorType.PROBE_VPD
-            ):
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_spc24")
-                    },
-                    name=f"{controller.controller_name} Tent Probe",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model="UIS Tent Sensor Probe (AC-SPC24)",
-                )
-            case SensorType.CO2 | SensorType.LIGHT:
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_cos3")
-                    },
-                    name=f"{controller.controller_name} CO2 + Light Sensor",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model="UIS CO2 + Light Sensor (AC-COS3)",
-                )
-            case SensorType.WATER:
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_wds3")
-                    },
-                    name=f"{controller.controller_name} Water Sensor",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model="UIS Water Sensor (AC-WDS3)",
-                )
-            case SensorType.SOIL:
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_sls3")
-                    },
-                    name=f"{controller.controller_name} Soil Sensor",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model="UIS Soil Sensor (AC-SLS3)",
-                )
-            case SensorType.WATER_TEMP_F | SensorType.WATER_TEMP_C:
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_wts")
-                    },
-                    name=f"{controller.controller_name} Water Temperature Sensor",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model="UIS Water Temperature Sensor",
-                )
-            case SensorType.PH:
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_phs")
-                    },
-                    name=f"{controller.controller_name} pH Sensor",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model="UIS pH Sensor",
-                )
-            case SensorType.EC | SensorType.TDS:
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_ecs")
-                    },
-                    name=f"{controller.controller_name} EC/TDS Sensor",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model="UIS EC/TDS Sensor",
-                )
-            case (
-                SensorType.CONTROLLER_TEMPERATURE_F
-                | SensorType.CONTROLLER_TEMPERATURE_C
-                | SensorType.CONTROLLER_HUMIDITY
-                | SensorType.CONTROLLER_VPD
-            ):
-                return controller.device_info
-            case _:
-                return DeviceInfo(
-                    identifiers={
-                        (DOMAIN, f"{controller.controller_id}_{sensor_port}_unknown{sensor_type}")
-                    },
-                    name=f"{controller.controller_name} Unknown Sensor",
-                    manufacturer=MANUFACTURER,
-                    via_device=controller.identifier,
-                    model=f"UIS Sensor Type {sensor_type}",
-                )
-
     @property
     def controller(self) -> ACInfinityController:
         """The parent controller for this USB-C port"""
@@ -274,8 +172,8 @@ class ACInfinitySensor:
 
     @property
     def device_info(self) -> DeviceInfo:
-        """A HAAS device definition visible in the device manager. Will be a child to the device associated with the parent controller."""
-        return self._device_info
+        """Returns the controller's device info so all sensor entities are grouped under the controller device."""
+        return self._controller.device_info
 
 
 class ACInfinityDevice:
@@ -299,14 +197,6 @@ class ACInfinityDevice:
         self._device_port = device_json[DevicePropertyKey.PORT]
         self._device_name = device_json[DevicePropertyKey.NAME]
 
-        self._device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{controller.controller_id}_{self._device_port}")},
-            name=f"{controller.controller_name} {self.device_name}",
-            manufacturer=MANUFACTURER,
-            via_device=controller.identifier,
-            model="UIS Enabled Device",
-        )
-
     @property
     def controller(self) -> ACInfinityController:
         """The parent controller for this USB-C port"""
@@ -324,8 +214,8 @@ class ACInfinityDevice:
 
     @property
     def device_info(self) -> DeviceInfo:
-        """A HAAS device definition visible in the device manager. Will be a child to the device associated with the parent controller."""
-        return self._device_info
+        """Returns the controller's device info so all port entities are grouped under the controller device."""
+        return self._controller.device_info
 
 
 class ACInfinityService:
