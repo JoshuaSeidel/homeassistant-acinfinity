@@ -274,6 +274,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSwitchEntityDescription] = [
 
 
 class ACInfinityDeviceSwitchEntity(ACInfinityDeviceEntity, SwitchEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityDeviceSwitchEntityDescription
 
     def __init__(

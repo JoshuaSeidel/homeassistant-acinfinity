@@ -175,6 +175,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceBinarySensorEntityDescription] = [
 class ACInfinityControllerBinarySensorEntity(
     ACInfinityControllerEntity, BinarySensorEntity
 ):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityControllerBinarySensorEntityDescription
 
     def __init__(
@@ -200,6 +201,7 @@ class ACInfinityControllerBinarySensorEntity(
 
 
 class ACInfinitySensorBinarySensorEntity(ACInfinitySensorEntity, BinarySensorEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinitySensorBinarySensorEntityDescription
 
     def __init__(
@@ -227,6 +229,7 @@ class ACInfinitySensorBinarySensorEntity(ACInfinitySensorEntity, BinarySensorEnt
 class ACInfinityDeviceBinarySensorEntity(ACInfinityDeviceEntity, BinarySensorEntity):
     """Represents a binary sensor associated with an AC Infinity controller port"""
 
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityDeviceBinarySensorEntityDescription
 
     def __init__(

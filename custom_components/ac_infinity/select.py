@@ -316,6 +316,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSelectEntityDescription] = [
 
 
 class ACInfinityControllerSelectEntity(ACInfinityControllerEntity, SelectEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityControllerSelectEntityDescription
 
     def __init__(
@@ -349,6 +350,7 @@ class ACInfinityControllerSelectEntity(ACInfinityControllerEntity, SelectEntity)
 
 
 class ACInfinityDeviceSelectEntity(ACInfinityDeviceEntity, SelectEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityDeviceSelectEntityDescription
 
     def __init__(

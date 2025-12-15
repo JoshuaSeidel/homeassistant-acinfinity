@@ -930,6 +930,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceSensorEntityDescription] = [
 
 
 class ACInfinityControllerSensorEntity(ACInfinityControllerEntity, SensorEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityControllerSensorEntityDescription
 
     def __init__(
@@ -954,6 +955,7 @@ class ACInfinityControllerSensorEntity(ACInfinityControllerEntity, SensorEntity)
 
 
 class ACInfinitySensorSensorEntity(ACInfinitySensorEntity, SensorEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinitySensorSensorEntityDescription
 
     def __init__(
@@ -978,6 +980,7 @@ class ACInfinitySensorSensorEntity(ACInfinitySensorEntity, SensorEntity):
 
 
 class ACInfinityDeviceSensorEntity(ACInfinityDeviceEntity, SensorEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityDeviceSensorEntityDescription
 
     def __init__(

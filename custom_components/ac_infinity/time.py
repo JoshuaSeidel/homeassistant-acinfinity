@@ -110,6 +110,7 @@ DEVICE_DESCRIPTIONS: list[ACInfinityDeviceTimeEntityDescription] = [
 
 
 class ACInfinityDeviceTimeEntity(ACInfinityDeviceEntity, TimeEntity):
+    _attr_translation_domain = DOMAIN
     entity_description: ACInfinityDeviceTimeEntityDescription
 
     def __init__(
