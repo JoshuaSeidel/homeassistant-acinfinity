@@ -937,6 +937,18 @@ class ACInfinitySensorEntity(ACInfinityEntity):
     def is_suitable(self) -> bool:
         return self._suitable_fn(self, self.sensor)
 
+    @property
+    def extra_state_attributes(self) -> dict[str, any]:
+        """Return entity specific state attributes including sensor port and type information."""
+        attrs = super().extra_state_attributes if hasattr(super(), 'extra_state_attributes') else {}
+        if isinstance(attrs, dict):
+            attrs = attrs.copy()
+        else:
+            attrs = {}
+        attrs["sensor_port"] = self._sensor.sensor_port
+        attrs["sensor_type"] = self._sensor.sensor_type
+        return attrs
+
 
 class ACInfinityDeviceEntity(ACInfinityEntity):
     def __init__(
@@ -990,6 +1002,18 @@ class ACInfinityDeviceEntity(ACInfinityEntity):
             self.device_port.device_port,
             DevicePropertyKey.ONLINE
         ) == 1 and (self._at_type_fn is None or self._at_type_fn(active_at_type))
+
+    @property
+    def extra_state_attributes(self) -> dict[str, any]:
+        """Return entity specific state attributes including the custom device name from AC Infinity app."""
+        attrs = super().extra_state_attributes if hasattr(super(), 'extra_state_attributes') else {}
+        if isinstance(attrs, dict):
+            attrs = attrs.copy()
+        else:
+            attrs = {}
+        attrs["device_name"] = self.device_port.device_name
+        attrs["port_number"] = self.device_port.device_port
+        return attrs
 
 
 @dataclass(frozen=True)
