@@ -923,6 +923,7 @@ class ACInfinityDataUpdateCoordinator(DataUpdateCoordinator):
 
 class ACInfinityEntity(CoordinatorEntity[ACInfinityDataUpdateCoordinator], ABC):
     _attr_has_entity_name = True
+    _attr_should_poll = False
     coordinator: ACInfinityDataUpdateCoordinator
     translation_key: str
 
@@ -932,6 +933,7 @@ class ACInfinityEntity(CoordinatorEntity[ACInfinityDataUpdateCoordinator], ABC):
         super().__init__(coordinator)
         self._platform_name = platform
         self._data_key = data_key
+        self._attr_device_info = None  # Will be set by subclasses
 
     def __repr__(self):
         return f"<ACInfinityEntity unique_id={self.unique_id}>"
@@ -984,6 +986,7 @@ class ACInfinityControllerEntity(ACInfinityEntity):
         self._controller = controller
         self._enabled_fn = enabled_fn
         self._suitable_fn = suitable_fn
+        self._attr_device_info = controller.device_info
 
     @property
     def unique_id(self) -> str:
@@ -1021,6 +1024,7 @@ class ACInfinitySensorEntity(ACInfinityEntity):
         self._sensor = sensor
         self._enabled_fn = enabled_fn
         self._suitable_fn = suitable_fn
+        self._attr_device_info = sensor.device_info
 
     @property
     def unique_id(self) -> str:
@@ -1060,6 +1064,7 @@ class ACInfinityDeviceEntity(ACInfinityEntity):
         self._enabled_fn = enabled_fn
         self._suitable_fn = suitable_fn
         self._at_type_fn = at_type_fn
+        self._attr_device_info = device.device_info
 
     @property
     def unique_id(self) -> str:
